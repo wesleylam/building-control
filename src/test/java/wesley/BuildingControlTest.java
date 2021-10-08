@@ -1,20 +1,19 @@
 package wesley;
-
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
-
-/**
- * Unit test for simple App.
- */
-public class BuildingControlTest 
-{
-    /**
-     * Rigorous Test :-)
-     */
-    @Test
-    public void shouldAnswerWithTrue()
-    {
-        assertTrue( true );
+ 
+import org.testng.annotations.*;
+import org.testng.Assert;
+ 
+public class BuildingControlTest {
+    
+    @BeforeClass
+    public void setUp() {
+        
     }
+
+    @Test
+    public void sampleTest() {
+        System.out.println("sample test");
+        Assert.assertTrue(true);
+    }
+ 
 }
