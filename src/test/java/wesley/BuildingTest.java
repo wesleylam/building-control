@@ -126,9 +126,9 @@ public class BuildingTest {
         building.addRoom(sampleCommonRooms[2]);
 
         Room[] rooms = building.getRooms();
-        assert rooms[0] == sampleApartments[0];
-        assert rooms[1] == sampleApartments[1];
-        assert rooms[2] == sampleApartments[2];
+        assert rooms[0] == sampleCommonRooms[0];
+        assert rooms[1] == sampleCommonRooms[1];
+        assert rooms[2] == sampleCommonRooms[2];
         assert rooms.length == 3;
     }
     /** 
