@@ -17,6 +17,15 @@ public class Building {
         this(DEFAULT_TEMP_SET_POINT);
     }
 
+    private Double roundDecimal(Double num, int decimalPlace){
+        if (decimalPlace == 0){
+            return (Math.round(num) * 1.0);
+        }
+        // multiply by factor, round and divide by factor (factor scale by num of decimal places)
+        Double factor = Math.pow(10.0, decimalPlace);
+        return (Double) (Math.round(num * factor) / factor);
+    }
+
     public void addRoom(Room room) throws ClassNotFoundException{
         
         // add room according to room type
@@ -51,17 +60,23 @@ public class Building {
     public void tempControl(){
         // loop rooms
         for (Room room : this.getRooms()){
-            if (room.temperature < this.tempSetPoint){
+
+            // equal when rounds to 2 decimal
+            if ( roundDecimal(room.temperature, 2).equals( roundDecimal(this.tempSetPoint, 2) ) ){
+                // same or minor difference, no heating/cooling
+                room.heatingOn = false;
+                room.coolingOn = false;
+            } else if (room.temperature < this.tempSetPoint){
+                // heating on
                 room.heatingOn = true;
                 room.coolingOn = false;
             } else if (room.temperature > this.tempSetPoint){
+                // cooling on
                 room.heatingOn = false;
                 room.coolingOn = true;
-            } else {
-                room.heatingOn = false;
-                room.coolingOn = false;
             }
             System.out.println(room.collectData());
         }
+        System.out.println();
     }
 }

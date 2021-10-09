@@ -3,6 +3,7 @@ package wesley;
 import org.testng.annotations.*;
 // exceptions
 import java.lang.ClassNotFoundException;
+import java.lang.IllegalArgumentException;
 
 public class BuildingTest {
     private Building building;
@@ -154,24 +155,38 @@ public class BuildingTest {
     /** 
      * helper function to determine if a room is in the correct cooling/heating state
      */
-    private Boolean isSuitableControl(Room room, double buildingTemp){
-        if (room.temperature > buildingTemp){
+    private Boolean isSuitableControl(Room room, double buildingTemp){        
+        // treat as equal if equal when rounds to 2 decimal
+        Double roundedRoomTemp = Math.round(room.temperature * 100.0) / 100.0;
+        Double roundedBuildingTemp = Math.round(buildingTemp * 100.0) / 100.0;
+
+        if ( roundedRoomTemp.equals(roundedBuildingTemp) ){
+            return ! room.heatingOn && ! room.coolingOn;
+        } else if (room.temperature > buildingTemp){
             return room.coolingOn && ! room.heatingOn;
         } else if (room.temperature < buildingTemp){
             return room.heatingOn && ! room.coolingOn;
-        } else {
-            return ! room.heatingOn && ! room.coolingOn;
         }
+        throw new IllegalArgumentException("Should be unreachable");
     }
     /** 
-     * test getting rooms with apartments and common rooms
+     * test rooms temperature control with: 
+     * (1) cooler temperature; (heating on) 
+     * (2) low difference temperature; (nothing on)
+     * (3) same temperature; (nothing on)
+     * (4) hotter temperature; (cooling on)
      * @throws ClassNotFoundException
      */
     @Test
     public void tempControl() throws ClassNotFoundException{
         building = new Building();
+        sampleApartments[0].temperature = building.tempSetPoint - 1;
         building.addRoom(sampleApartments[0]);
+        sampleCommonRooms[1].temperature = building.tempSetPoint + 0.001;
         building.addRoom(sampleCommonRooms[1]);
+        sampleCommonRooms[2].temperature = building.tempSetPoint;
+        building.addRoom(sampleCommonRooms[2]);
+        sampleApartments[2].temperature = building.tempSetPoint + 1;
         building.addRoom(sampleApartments[2]);
 
         building.tempControl();
