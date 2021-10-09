@@ -151,4 +151,34 @@ public class BuildingTest {
         assert rooms.length == 3;
     }
 
+    /** 
+     * helper function to determine if a room is in the correct cooling/heating state
+     */
+    private Boolean isSuitableControl(Room room, double buildingTemp){
+        if (room.temperature > buildingTemp){
+            return room.coolingOn && ! room.heatingOn;
+        } else if (room.temperature < buildingTemp){
+            return room.heatingOn && ! room.coolingOn;
+        } else {
+            return ! room.heatingOn && ! room.coolingOn;
+        }
+    }
+    /** 
+     * test getting rooms with apartments and common rooms
+     * @throws ClassNotFoundException
+     */
+    @Test
+    public void tempControl() throws ClassNotFoundException{
+        building = new Building();
+        building.addRoom(sampleApartments[0]);
+        building.addRoom(sampleCommonRooms[1]);
+        building.addRoom(sampleApartments[2]);
+
+        building.tempControl();
+
+        for (Room room : building.getRooms()){
+            assert isSuitableControl(room, building.tempSetPoint);
+        }
+
+    }
 }

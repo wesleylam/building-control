@@ -47,4 +47,21 @@ public class Building {
 
         return allRooms;
     }
+
+    public void tempControl(){
+        // loop rooms
+        for (Room room : this.getRooms()){
+            if (room.temperature < this.tempSetPoint){
+                room.heatingOn = true;
+                room.coolingOn = false;
+            } else if (room.temperature > this.tempSetPoint){
+                room.heatingOn = false;
+                room.coolingOn = true;
+            } else {
+                room.heatingOn = false;
+                room.coolingOn = false;
+            }
+            System.out.println(room.collectData());
+        }
+    }
 }
