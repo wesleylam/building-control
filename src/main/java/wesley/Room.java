@@ -14,7 +14,8 @@ public abstract class Room {
     public boolean heatingOn;
     public boolean coolingOn;
 
-    public Room(int ID){
+    public Room(int ID) throws IllegalArgumentException{
+        if (ID < 0){ throw new IllegalArgumentException("ID must not be negative"); }
         this.ID = ID;
         this.temperature = ThreadLocalRandom.current().nextDouble(randMinTemp, randMaxTemp);
         this.heatingOn = false;

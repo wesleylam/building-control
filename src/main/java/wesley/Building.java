@@ -19,10 +19,31 @@ public class Building {
 
     public void addRoom(Room room) throws ClassNotFoundException{
         
+        // add room according to room type
+        if (room instanceof Apartment){
+            apartments.add(room);
+        }
+        else if (room instanceof CommonRoom){
+            commonRooms.add(room);
+        }
+        else {
+            // throw exception when unspecified room type is passed
+            throw new ClassNotFoundException();
+        }
     }
 
     public Room[] getRooms(){
         Room[] allRooms = new Room[apartments.size() + commonRooms.size()];
+
+        int i = 0;
+        for (Room apt : apartments) {
+            allRooms[i] = apt;
+            i += 1;
+        }
+        for (Room cr : commonRooms) {
+            allRooms[i] = cr;
+            i += 1;
+        }
 
         return allRooms;
     }
