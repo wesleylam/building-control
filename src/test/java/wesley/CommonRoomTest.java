@@ -25,7 +25,7 @@ public class CommonRoomTest {
     }
 
     /** 
-     * Test apartment constructor with negative ID
+     * Test common room constructor with negative ID
      * @throws IllegalArgumentException
      */
     @Test(expectedExceptions = { IllegalArgumentException.class })
@@ -33,12 +33,72 @@ public class CommonRoomTest {
         commonRoom = new CommonRoom(-101, roomType);
     }
 
+
+    // collect Data
     /** 
-     * Test apartment collect data function
+     * Test common room collect data function without cooling/heating
      */
     @Test
-    public void collectData() {
+    public void collectData1() {
         commonRoom = new CommonRoom(ID, roomType);
-        assert commonRoom.collectData().equals("Common Room: ID - " + String.valueOf(ID) + ", Type: " + roomType);
+        
+        String expected = (
+            "Common Room: ID - " + String.valueOf(ID) + 
+            ", Type: " + roomType + 
+            String.format(", Temperature: %.2f", commonRoom.temperature)
+        );
+        assert commonRoom.collectData().equals(expected);
+    }
+    /** 
+     * Test common room collect data function with cooling
+     */
+    @Test
+    public void collectData2() {
+        commonRoom = new CommonRoom(ID, roomType);
+        commonRoom.coolingOn = true;
+        
+        String expected = (
+            "Common Room: ID - " + String.valueOf(ID) + 
+            ", Type: " + roomType + 
+            String.format(", Temperature: %.2f", commonRoom.temperature) + 
+            ", Cooling: On"
+        );
+        assert commonRoom.collectData().equals(expected);
+    }
+
+    /** 
+     * Test common room collect data function with heating
+     */
+    @Test
+    public void collectData3() {
+        commonRoom = new CommonRoom(ID, roomType);
+        commonRoom.heatingOn = true;
+        
+        String expected = (
+            "Common Room: ID - " + String.valueOf(ID) + 
+            ", Type: " + roomType + 
+            String.format(", Temperature: %.2f", commonRoom.temperature) + 
+            ", Heating: On"
+        );
+        assert commonRoom.collectData().equals(expected);
+    }
+
+    /** 
+     * Test common room collect data function with cooling and heating
+     */
+    @Test
+    public void collectData4() {
+        commonRoom = new CommonRoom(ID, roomType);
+        commonRoom.heatingOn = true;
+        commonRoom.coolingOn = true;
+
+        String expected = (
+            "Common Room: ID - " + String.valueOf(ID) + 
+            ", Type: " + roomType + 
+            String.format(", Temperature: %.2f", commonRoom.temperature) + 
+            ", Heating: On" + 
+            ", Cooling: On"
+        );
+        assert commonRoom.collectData().equals(expected);
     }
 }

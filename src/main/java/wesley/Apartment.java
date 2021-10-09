@@ -11,7 +11,12 @@ public class Apartment extends Room {
     }
 
     public String collectData(){
-        // return String.format("Apartment: ID - %d, Owner: %s, Heating: %s, Cooling: %s", this.ID, this.owner, (this.heatingOn ? "On" : "Off"), (this.coolingOn ? "On" : "Off") );
-        return String.format("Apartment: ID - %d, Owner: %s", this.ID, this.owner );
+        return String.format("Apartment: ID - %d, Owner: %s, Temperature: %.2f%s%s", 
+            this.ID, 
+            this.owner, 
+            this.temperature,
+            (this.heatingOn ? ", Heating: On" : ""), 
+            (this.coolingOn ? ", Cooling: On" : "") 
+        );
     }
 }

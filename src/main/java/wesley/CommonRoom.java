@@ -11,6 +11,12 @@ public class CommonRoom extends Room{
     }
     
     public String collectData(){
-        return String.format("Common Room: ID - %d, Type: %s", this.ID, this.roomType );
+        return String.format("Common Room: ID - %d, Type: %s, Temperature: %.2f%s%s", 
+            this.ID, 
+            this.roomType, 
+            this.temperature,
+            (this.heatingOn ? ", Heating: On" : ""), 
+            (this.coolingOn ? ", Cooling: On" : "")  
+        );
     }
 }

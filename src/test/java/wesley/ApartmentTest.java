@@ -42,12 +42,72 @@ public class ApartmentTest {
         apartment = new Apartment(101, "");
     }
 
+
+    // collect Data
     /** 
-     * Test apartment collect data function
+     * Test apartment collect data function without cooling/heating
      */
     @Test
-    public void collectData() {
+    public void collectData1() {
         apartment = new Apartment(ID, owner);
-        assert apartment.collectData().equals("Apartment: ID - " + String.valueOf(ID) + ", Owner: " + owner);
+
+        String expected = (
+            "Apartment: ID - " + String.valueOf(ID) + 
+            ", Owner: " + owner + 
+            String.format(", Temperature: %.2f", apartment.temperature)
+        );
+        assert apartment.collectData().equals(expected);
+    }
+    /** 
+     * Test apartment collect data function with cooling
+     */
+    @Test
+    public void collectData2() {
+        apartment = new Apartment(ID, owner);
+        apartment.coolingOn = true;
+        
+        String expected = (
+            "Apartment: ID - " + String.valueOf(ID) + 
+            ", Owner: " + owner + 
+            String.format(", Temperature: %.2f", apartment.temperature) + 
+            ", Cooling: On"
+        );
+        assert apartment.collectData().equals(expected);
+    }
+
+    /** 
+     * Test apartment collect data function with heating
+     */
+    @Test
+    public void collectData3() {
+        apartment = new Apartment(ID, owner);
+        apartment.heatingOn = true;
+        
+        String expected = (
+            "Apartment: ID - " + String.valueOf(ID) + 
+            ", Owner: " + owner + 
+            String.format(", Temperature: %.2f", apartment.temperature) + 
+            ", Heating: On"
+        );
+        assert apartment.collectData().equals(expected);
+    }
+
+    /** 
+     * Test apartment collect data function with cooling and heating
+     */
+    @Test
+    public void collectData4() {
+        apartment = new Apartment(ID, owner);
+        apartment.heatingOn = true;
+        apartment.coolingOn = true;
+
+        String expected = (
+            "Apartment: ID - " + String.valueOf(ID) + 
+            ", Owner: " + owner + 
+            String.format(", Temperature: %.2f", apartment.temperature) + 
+            ", Heating: On" + 
+            ", Cooling: On"
+        );
+        assert apartment.collectData().equals(expected);
     }
 }
