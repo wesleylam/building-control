@@ -57,7 +57,7 @@ public class Building {
         return allRooms;
     }
 
-    public void tempControl(){
+    public void tempControl(Boolean print){
         // loop rooms
         for (Room room : this.getRooms()){
 
@@ -75,8 +75,9 @@ public class Building {
                 room.heatingOn = false;
                 room.coolingOn = true;
             }
-            System.out.println(room.collectData());
+            if (print) System.out.println(room.collectData());
         }
-        System.out.println();
+        if (print) System.out.println();
     }
+
 }

@@ -110,4 +110,44 @@ public class ApartmentTest {
         );
         assert apartment.collectData().equals(expected);
     }
+
+
+    // pass time
+    /** 
+     * Test apartment temperature after time passes when cooling
+     */
+    @Test
+    public void passTimeCool() {
+        apartment = new Apartment(ID, owner);
+        apartment.coolingOn = true;
+        double oldTemp = apartment.temperature;
+        apartment.passTime();
+
+        assert apartment.temperature == oldTemp - 0.01;
+    }
+
+    /** 
+     * Test apartment temperature after time passes when heating
+     */
+    @Test
+    public void passTimeHeat() {
+        apartment = new Apartment(ID, owner);
+        apartment.heatingOn = true;
+        double oldTemp = apartment.temperature;
+        apartment.passTime();
+
+        assert apartment.temperature == oldTemp + 0.01;
+    }
+
+    /** 
+     * Test apartment temperature after time passes when no heating/cooling enabled
+     */
+    @Test
+    public void passTimeNone() {
+        apartment = new Apartment(ID, owner);
+        double oldTemp = apartment.temperature;
+        apartment.passTime();
+
+        assert apartment.temperature == oldTemp;
+    }
 }

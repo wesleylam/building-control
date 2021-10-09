@@ -189,7 +189,7 @@ public class BuildingTest {
         sampleApartments[2].temperature = building.tempSetPoint + 1;
         building.addRoom(sampleApartments[2]);
 
-        building.tempControl();
+        building.tempControl(false);
 
         for (Room room : building.getRooms()){
             assert isSuitableControl(room, building.tempSetPoint);

@@ -8,6 +8,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public abstract class Room {
     private final static double randMinTemp = 10;
     private final static double randMaxTemp = 40;
+    private final static double timePassTempChange = 0.01;
 
     public int ID;
     public double temperature;
@@ -23,4 +24,13 @@ public abstract class Room {
     }
 
     public abstract String collectData();
+
+    public void passTime(){
+        if (heatingOn){
+            temperature += timePassTempChange;
+        }
+        if (coolingOn){
+            temperature -= timePassTempChange;
+        }
+    }
 }

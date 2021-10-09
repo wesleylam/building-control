@@ -101,4 +101,46 @@ public class CommonRoomTest {
         );
         assert commonRoom.collectData().equals(expected);
     }
+
+
+
+
+    // pass time
+    /** 
+     * Test apartment temperature after time passes when cooling
+     */
+    @Test
+    public void passTimeCool() {
+        commonRoom = new CommonRoom(ID, roomType);
+        commonRoom.coolingOn = true;
+        double oldTemp = commonRoom.temperature;
+        commonRoom.passTime();
+
+        assert commonRoom.temperature == oldTemp - 0.01;
+    }
+
+    /** 
+     * Test apartment temperature after time passes when heating
+     */
+    @Test
+    public void passTimeHeat() {
+        commonRoom = new CommonRoom(ID, roomType);
+        commonRoom.heatingOn = true;
+        double oldTemp = commonRoom.temperature;
+        commonRoom.passTime();
+
+        assert commonRoom.temperature == oldTemp + 0.01;
+    }
+
+    /** 
+     * Test apartment temperature after time passes when no heating/cooling enabled
+     */
+    @Test
+    public void passTimeNone() {
+        commonRoom = new CommonRoom(ID, roomType);
+        double oldTemp = commonRoom.temperature;
+        commonRoom.passTime();
+
+        assert commonRoom.temperature == oldTemp;
+    }
 }
