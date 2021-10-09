@@ -37,12 +37,19 @@ public class BuildingControl{
         // main loop
         while (! quit){
             // prompt user input
-            System.out.println("Enter an option: \n - A new temperature for the building \n - quit/q (quit program)");
+            System.out.println("Enter an option: \n - A new temperature for the building \n - status/s (see rooms status) \n - quit/q (quit program)");
             input = scanner.next();
             
             // quit program
             if (input.toLowerCase().equals("quit") || input.toLowerCase().equals("q")){ 
                 quit = true;
+            }
+            else if (input.toLowerCase().equals("status") || input.toLowerCase().equals("s")) {
+                // print all rooms data
+                for (Room room : building.getRooms()){
+                    System.out.println(room.collectData());
+                }
+                System.out.println();
             }
             else {
                 // set building temperature
