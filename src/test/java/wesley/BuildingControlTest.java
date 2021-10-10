@@ -1,19 +1,17 @@
 package wesley;
  
 import org.testng.annotations.*;
-import org.testng.Assert;
  
 public class BuildingControlTest {
-    
-    @BeforeClass
-    public void setUp() {
-        
-    }
 
-    @Test
-    public void sampleTest() {
-        System.out.println("sample test");
-        Assert.assertTrue(true);
+    /** 
+     * test main function with too many arguments
+     * @throws ClassNotFoundException
+     */
+    @Test (expectedExceptions = { IllegalArgumentException.class })
+    public void testMainTooManyArgs() throws ClassNotFoundException{
+        String[] args = {"25", "extra"};
+        BuildingControl.main(args);
     }
- 
 }
+    
